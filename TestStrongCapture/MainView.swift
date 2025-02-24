@@ -29,11 +29,17 @@ struct MainView: View {
             }
             .navigationDestination(for: Destinations.self) { destination in
                 ChildView(viewModel: viewModel.makeChildViewModel())
+                    .onDisappear {
+                        viewModel.handleOnDisappear()
+                    }
             }
         }
         .padding()
         .sheet(isPresented: $isPresented) {
             ChildView(viewModel: viewModel.makeChildViewModel())
+                .onDisappear {
+                    viewModel.handleOnDisappear()
+                }
         }
     }
 }

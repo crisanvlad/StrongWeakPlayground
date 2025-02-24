@@ -9,6 +9,7 @@ import Combine
 import Foundation
 
 final class MainViewModel: ObservableObject {
+    private var childViewModel: ChildViewModel?
     init() {
         print("MainViewModel initialized")
     }
@@ -16,9 +17,15 @@ final class MainViewModel: ObservableObject {
     deinit {
         print("MainViewModel deallocated")
     }
+    
+    func handleOnDisappear() {
+        childViewModel = nil
+    }
 
     func makeChildViewModel() -> ChildViewModel {
+        if let childViewModel { return childViewModel }
         let newViewModel = ChildViewModel(interactor: WatchlistInteractor())
+        childViewModel = newViewModel
         return newViewModel
     }
 }
